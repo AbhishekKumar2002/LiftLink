@@ -1,0 +1,80 @@
+{
+  "asset": { "generator": "glTF-Transform v3.10.0", "version": "2.0" },
+  "accessors": [
+    { "type": "SCALAR", "componentType": 5125, "count": 190464 },
+    {
+      "name": "POSITION",
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 33488,
+      "max": [0.9872313737869263, 0.9975767135620117, 0.9872314929962158],
+      "min": [-0.9872310161590576, -0.9975767135620117, -0.9872310161590576]
+    },
+    { "name": "NORMAL", "type": "VEC3", "componentType": 5126, "count": 33488 },
+    {
+      "name": "TEXCOORD_0",
+      "type": "VEC2",
+      "componentType": 5126,
+      "count": 33488
+    }
+  ],
+  "bufferViews": [{ "buffer": 0, "byteOffset": 0, "byteLength": 107374 }],
+  "samplers": [
+    { "magFilter": 9729, "minFilter": 9987, "wrapS": 10497, "wrapT": 10497 }
+  ],
+  "textures": [{ "source": 0, "sampler": 0 }],
+  "images": [{ "mimeType": "image/jpeg", "uri": "Scene_-_Root_baseColor.png" }],
+  "buffers": [{ "uri": "earth_new1.bin", "byteLength": 107374 }],
+  "materials": [
+    {
+      "name": "Scene_-_Root",
+      "doubleSided": true,
+      "pbrMetallicRoughness": {
+        "roughnessFactor": 0.4,
+        "metallicFactor": 0,
+        "baseColorTexture": { "index": 0 }
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "attributes": { "POSITION": 1, "NORMAL": 2, "TEXCOORD_0": 3 },
+          "mode": 4,
+          "material": 0,
+          "indices": 0,
+          "extensions": {
+            "KHR_draco_mesh_compression": {
+              "bufferView": 0,
+              "attributes": { "POSITION": 0, "NORMAL": 1, "TEXCOORD_0": 2 }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    { "name": "Object_4", "mesh": 0 },
+    {
+      "name": "Sphere_2",
+      "scale": [1.127645492553711, 1.127645492553711, 1.127645492553711],
+      "children": [0]
+    },
+    {
+      "name": "GLTF_SceneRootNode",
+      "rotation": [0.7071067811865475, 0, 0, 0.7071067811865476],
+      "children": [1]
+    },
+    { "name": "root", "children": [2] },
+    {
+      "name": "Sketchfab_model",
+      "rotation": [-0.7071067811865475, 0, 0, 0.7071067811865476],
+      "children": [3]
+    }
+  ],
+  "scenes": [{ "nodes": [4] }],
+  "scene": 0,
+  "extensionsUsed": ["KHR_draco_mesh_compression"],
+  "extensionsRequired": ["KHR_draco_mesh_compression"]
+}

@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model requested {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  users    users?  @relation(fields: [usersId], references: [id], onDelete: Cascade)
+  usersId  String? @db.ObjectId
+  cardId   String?
+  username String
+}
+
+model notification {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  users    users?  @relation(fields: [usersId], references: [id], onDelete: Cascade)
+  usersId  String? @db.ObjectId
+  travelId String? @db.ObjectId
+}
+
+model friends {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  travel   travel? @relation(fields: [travelId], references: [id], onDelete: Cascade)
+  travelId String? @db.ObjectId
+  friendId String
+}
+
+model users {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  email           String         @unique
+  name            String?
+  username        String         @unique
+  password        String
+  gender          String?
+  created         DateTime       @default(now())
+  updated         DateTime       @updatedAt
+  userimg         String?
+  travelist       travel[]
+  rating          rating?
+  conversationIds String[]       @db.ObjectId
+  conversations   Conversation[] @relation(fields: [conversationIds], references: [id])
+  seenMessageIds  String[]       @db.ObjectId
+  seenMessages    Message[]      @relation("Seen", fields: [seenMessageIds], references: [id])
+  accounts        Account[]
+  messages        Message[]
+  otp             Int
+
+  isVerified   Boolean
+  notification notification[]
+  requested    requested[]
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+  user              users   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Conversation {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt     DateTime  @default(now())
+  lastMessageAt DateTime  @default(now())
+  name          String?
+  isGroup       Boolean?
+  messagesIds   String[]  @db.ObjectId
+  messages      Message[]
+  usersIds      String[]  @db.ObjectId
+  users         users[]   @relation(fields: [usersIds], references: [id])
+  travelId      String  @db.ObjectId
+
+}
+
+model Message {
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  body          String?
+  image         String?
+  createdAt     DateTime     @default(now())
+  seenIds       String[]     @db.ObjectId
+  seen          users[]      @relation("Seen", fields: [seenIds], references: [id])
+  convesationId String       @db.ObjectId
+  conversation  Conversation @relation(fields: [convesationId], references: [id], onDelete: Cascade)
+
+  senderId String @db.ObjectId
+  sender   users  @relation(fields: [senderId], references: [id], onDelete: Cascade)
+}
+
+model rating {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  feedback String
+  usersId  String? @unique @db.ObjectId
+  users    users?  @relation(fields: [usersId], references: [id])
+}
+
+model travel {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  usersId  String?   @db.ObjectId
+  users    users?    @relation(fields: [usersId], references: [id])
+  from     String
+  to       String
+  date     DateTime
+  onlyDate DateTime  @db.Date
+  friends  friends[]
+ 
+}
